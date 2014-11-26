@@ -21,6 +21,12 @@ Simply `install Compass <http://compass-style.org/install/>`_ from the docs, the
 
 Compass will automatically regenerate CSS files as you edit the base SASS files in ``static/sass``
 
+Mockup
+------
+As an example, this is an early mockup of the issue tracker.
+
+.. image:: mock.png
+
 Contact
 -------
 The author of this project can be contacted at `daniel@danieloaks.net <mailto:daniel@danieloaks.net>`_
