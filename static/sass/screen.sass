@@ -1,0 +1,62 @@
+// TinyWebApps SCSS
+@import compass/reset
+@import compass
+
+@import standard_defs
+@import defs
+
+// layout
+*
+    box-sizing: border-box
+
+#container
+    min-width: 100%
+    min-height: 100%
+    font-family: $standard-font-family
+
+    // installation page
+    &.install
+        margin-bottom: 2rem
+        text-align: center
+        #background
+            position: fixed
+            top: 0
+            left: 0
+            width: 100%
+            height: 100%
+            background: #24488d
+            @include background(linear-gradient(#28326f, #24488d, #28326f) fixed)
+        .logo
+            display: block
+            width: 30rem
+            max-width: 80%
+            margin: 2rem auto 2.5rem
+            padding: 0 2.5rem
+            @include filter($sharp-drop-shadow)
+
+        .form
+            width: 56rem
+            max-width: 86%
+            margin: 0 auto
+            padding: 1.7rem 2.35rem
+            border-radius: 1.7rem
+            background: #f7f7f7
+            @include filter($sharp-drop-shadow)
+            
+            h1
+                font-size: 2rem
+
+            .headerline
+                display: block
+                font-size: 1.1rem
+                margin-top: 0.7rem
+
+            .ask
+                display: block
+                font-size: 1.35rem
+                margin-top: 1.6rem
+                &:last-child
+                    margin-top: 1.5rem
+
+                input[type=submit]
+                    font-size: 1.6rem

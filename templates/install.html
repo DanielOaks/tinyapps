@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+{% block title %}Install{% endblock %}
+{% block class %}install{% endblock %}
+{% block content %}
+    <div id="background"></div>
+    <a href="/"><img class="logo" src="/static/img/logo.svg" alt="Install TinyApps" title="Install TinyApps" /></a>
+    <div class="form">
+        {% if form %}
+        <h1>Welcome!</h1>
+
+        <span class="headerline">We just need a few details we need to setup your instance.</span>
+
+        <form action="finish_install">
+            <div class="ask"><label><input type="checkbox" name="allow_external_ips"> Let other computers access my TinyApps.</label></div>
+
+            <div class="ask"><input type="submit" value="Install"></div>
+        </form>
+        {% else %}
+        {{ content }}
+        {% endif %}
+    </div>
+{% endblock %}

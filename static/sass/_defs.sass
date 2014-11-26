@@ -1,0 +1,23 @@
+// Definitions SASS File
+// Contains general variables and such
+
+// Colours
+$rim_grey: rgb(232, 232, 242)
+
+// Fonts and Shadows
+$standard-font-family: "Helvetica Neue", Helvetica, Arial, sans-serif
+$small-font-family: Tahoma, Verdana, Segoe, sans-serif
+
+$standard-drop-shadow: drop-shadow(0.8rem 0.8rem 0.7rem rgba(0,0,0,0.25))
+$sharp-drop-shadow: drop-shadow(0.125rem 0.125rem 0 rgba(0,0,0,0.5))
+
+// Media queries
+$mobile-width: 40rem
+
+@mixin respond-to($media)
+    @if $media == mobile
+        @media only screen and (max-width: $mobile-width)
+            @content
+    @else if $media == desktop
+        @media only screen and (min-width: $mobile-width)
+            @content

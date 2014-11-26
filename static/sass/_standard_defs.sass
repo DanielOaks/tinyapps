@@ -1,0 +1,46 @@
+// Standard Definitions SASS File
+// Contains mostly stuff we need to redefine since we ruined it with CSS reset
+
+em
+    font-style: italic
+strong
+    font-weight: bold
+
+sup
+    vertical-align: super
+sub
+    vertical-align: sub
+
+// paragraphs
+p
+    widows: 3  // printing
+    orphans: 3  // printing
+    margin-bottom: 0.8rem
+    &:last-child
+        margin-bottom: 0
+    + p
+        text-indent: 1rem
+
+// headings
+h3
+    font-size: 1.3rem
+    margin-top: 1rem
+
+// custom
+.center
+    text-align: center
+.right
+    text-align: right
+
+.huge
+    font-size: 5rem
+.large
+    font-size: 3rem
+.big
+    font-size: 1.7rem
+.regular
+    font-size: 1rem
+.small
+    font-size: 0.6rem
+.tiny
+    font-size: 0.36rem

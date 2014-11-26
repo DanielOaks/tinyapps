@@ -1,0 +1,187 @@
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, embed,
+figure, figcaption, footer, header, hgroup,
+menu, nav, output, ruby, section, summary,
+time, mark, audio, video {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  font: inherit;
+  font-size: 100%;
+  vertical-align: baseline;
+}
+
+html {
+  line-height: 1;
+}
+
+ol, ul {
+  list-style: none;
+}
+
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+
+caption, th, td {
+  text-align: left;
+  font-weight: normal;
+  vertical-align: middle;
+}
+
+q, blockquote {
+  quotes: none;
+}
+q:before, q:after, blockquote:before, blockquote:after {
+  content: "";
+  content: none;
+}
+
+a img {
+  border: none;
+}
+
+article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, section, summary {
+  display: block;
+}
+
+em {
+  font-style: italic;
+}
+
+strong {
+  font-weight: bold;
+}
+
+sup {
+  vertical-align: super;
+}
+
+sub {
+  vertical-align: sub;
+}
+
+p {
+  widows: 3;
+  orphans: 3;
+  margin-bottom: 0.8rem;
+}
+p:last-child {
+  margin-bottom: 0;
+}
+p + p {
+  text-indent: 1rem;
+}
+
+h3 {
+  font-size: 1.3rem;
+  margin-top: 1rem;
+}
+
+.center {
+  text-align: center;
+}
+
+.right {
+  text-align: right;
+}
+
+.huge {
+  font-size: 5rem;
+}
+
+.large {
+  font-size: 3rem;
+}
+
+.big {
+  font-size: 1.7rem;
+}
+
+.regular {
+  font-size: 1rem;
+}
+
+.small {
+  font-size: 0.6rem;
+}
+
+.tiny {
+  font-size: 0.36rem;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+#container {
+  min-width: 100%;
+  min-height: 100%;
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
+#container.install {
+  margin-bottom: 2rem;
+  text-align: center;
+}
+#container.install #background {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: #24488d;
+  background: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, #28326f), color-stop(50%, #24488d), color-stop(100%, #28326f)) fixed;
+  background: -webkit-linear-gradient(#28326f, #24488d, #28326f) fixed;
+  background: -moz-linear-gradient(#28326f, #24488d, #28326f) fixed;
+  background: -o-linear-gradient(#28326f, #24488d, #28326f) fixed;
+  background: linear-gradient(#28326f, #24488d, #28326f) fixed;
+}
+#container.install .logo {
+  display: block;
+  width: 30rem;
+  max-width: 80%;
+  margin: 2rem auto 2.5rem;
+  padding: 0 2.5rem;
+  -webkit-filter: drop-shadow(0.125rem 0.125rem 0 rgba(0, 0, 0, 0.5));
+  -moz-filter: drop-shadow(0.125rem 0.125rem 0 rgba(0, 0, 0, 0.5));
+  filter: drop-shadow(0.125rem 0.125rem 0 rgba(0, 0, 0, 0.5));
+}
+#container.install .form {
+  width: 56rem;
+  max-width: 86%;
+  margin: 0 auto;
+  padding: 1.7rem 2.35rem;
+  border-radius: 1.7rem;
+  background: #f7f7f7;
+  -webkit-filter: drop-shadow(0.125rem 0.125rem 0 rgba(0, 0, 0, 0.5));
+  -moz-filter: drop-shadow(0.125rem 0.125rem 0 rgba(0, 0, 0, 0.5));
+  filter: drop-shadow(0.125rem 0.125rem 0 rgba(0, 0, 0, 0.5));
+}
+#container.install .form h1 {
+  font-size: 2rem;
+}
+#container.install .form .headerline {
+  display: block;
+  font-size: 1.1rem;
+  margin-top: 0.7rem;
+}
+#container.install .form .ask {
+  display: block;
+  font-size: 1.35rem;
+  margin-top: 1.6rem;
+}
+#container.install .form .ask:last-child {
+  margin-top: 1.5rem;
+}
+#container.install .form .ask input[type=submit] {
+  font-size: 1.6rem;
+}

@@ -1,0 +1,65 @@
+#!/usr/bin/env python3
+# TinyApps - Base Server
+# written by Daniel Oaks <daniel@danieloaks.net>
+# licensed under the BSD 2-clause license
+import os
+import sys
+
+# make everything relative to our base dir
+# this is just so templates and importing work
+abspath = os.path.abspath(__file__)
+dname = os.path.dirname(abspath)
+os.chdir(dname)
+
+# webserver stuff
+import jinja2
+import twa
+from twa import jinja_utils
+import bottle
+
+# jinja2 templates
+env = jinja2.Environment(loader=jinja2.FileSystemLoader('templates'))
+jinja_utils.apply_filters(env)
+
+# webserver and submodules
+app = bottle.Bottle()
+config = twa.TinyConfig('data/config.json')
+config.save()
+
+
+@bottle.route('/')
+def index():
+    """Install, login, or overview."""
+    if not config.finished:
+        return env.get_template('install.html').render(form=True)
+    else:
+        return 'Login / Overview Pages to go here<br><a href="/example">Example Overview Page</a>'
+
+
+# install
+@bottle.route('/finish_install')
+def index():
+    """Finish installing!"""
+    if not config.finished:
+        for name in ['allow_external_ips']:
+            setattr(config, name, bottle.request.forms.get(name))
+        config.save()
+        return env.get_template('install.html').render(content="<h1>Finished installing!</h1>")
+    else:
+        return env.get_template('install.html').render(content="<h1>Already finished installing!</h1>")
+
+
+@bottle.route('/example')
+def index():
+    """Example Page."""
+    return env.get_template('example.html').render(title='Index', content='This is an example')
+
+
+@bottle.route('/static/<filename:path>')
+def static(filename):
+    """Return static stuff."""
+    return bottle.static_file(filename, root='static')
+
+# run the webserver
+if __name__ == '__main__':
+    bottle.run(host='localhost', port=8080, debug=True)
