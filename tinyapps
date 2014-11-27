@@ -31,6 +31,7 @@ users = twa.TinyUsers('data/users.sqlite')
 def index():
     """Install, login, or overview."""
     if not config.finished:
+        # restrict to 127.0.0.1 / localhost
         return env.get_template('install.html').render(form=True)
     else:
         return 'Login / Overview Pages to go here<br><a href="/example">Example Overview Page</a>'
@@ -41,8 +42,10 @@ def index():
 def index():
     """Finish installing!"""
     if not config.finished:
-        for name in ['allow_external_ips']:
-            setattr(config, name, bottle.request.forms.get(name))
+        # restrict to 127.0.0.1 / localhost
+        for key in ['allow_external_ips']:
+            value = bottle.request.forms.get(key)
+            setattr(config, key, value)
         config.save()
         return env.get_template('install.html').render(content="<h1>Finished installing!</h1>")
     else:
