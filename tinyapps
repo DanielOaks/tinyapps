@@ -24,7 +24,7 @@ jinja_utils.apply_filters(env)
 # webserver and submodules
 app = bottle.Bottle()
 config = twa.TinyConfig('data/config.json')
-config.save()
+users = twa.TinyUsers('data/users.sqlite')
 
 
 @bottle.route('/')
