@@ -21,6 +21,10 @@ class TinyConfig:
 
     def load(self):
         """Load from our config file."""
+        if os.sep in self._path:
+            folder = self._path.rsplit(os.sep, 1)[0]
+            if not os.path.exists(folder):
+                os.makedirs(folder)
         try:
             with open(self._path, 'r') as config_file:
                 self._config = json.loads(config_file.read())

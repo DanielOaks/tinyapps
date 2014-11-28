@@ -10,8 +10,16 @@
 
         <span class="headerline">We just need a few details we need to setup your instance.</span>
 
-        <form action="finish_install">
-            <div class="ask"><label><input type="checkbox" name="allow_external_ips"> Let other computers access my TinyApps.</label></div>
+        <form action="finish_install" method="post">
+            <div class="ask"><label><input type="checkbox" name="allow_external_ips" value="TA_True"> Let other computers access my TinyApps.</label></div>
+
+            {% if not users.site_admin_exists %}
+                <div class="ask">
+                    Admin Account:<br>
+                    <label>Username: <input type="text" name="username"></label><br>
+                    <label>Password: <input type="password" name="password"></label>
+                </div>
+            {% endif %}
 
             <div class="ask"><input type="submit" value="Install"></div>
         </form>

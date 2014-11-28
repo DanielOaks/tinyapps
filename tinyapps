@@ -4,6 +4,7 @@
 # licensed under the BSD 2-clause license
 import os
 import sys
+import traceback
 
 # make everything relative to our base dir
 # this is just so templates and importing work
@@ -30,24 +31,43 @@ users = twa.TinyUsers('data/users.sqlite')
 @bottle.route('/')
 def index():
     """Install, login, or overview."""
-    if not config.finished:
+    # todo: regex match it instead, make sure prople can't use bad stuff against us?
+    is_local_request = (bottle.request.urlparts[1].lower().startswith('localhost') or
+                        bottle.request.urlparts[1].lower().startswith('127.0.0.1'))
+    if (not config.finished or not users.site_admin_exists) and is_local_request:
         # restrict to 127.0.0.1 / localhost
-        return env.get_template('install.html').render(form=True)
+        return env.get_template('install.html').render(form=True, config=config, users=users)
+    elif not config.finished or not users.site_admin_exists:
+        return env.get_template('install.html').render(content="<h1>Instance must be setup from localhost.</h1>")
     else:
         return 'Login / Overview Pages to go here<br><a href="/example">Example Overview Page</a>'
 
 
 # install
-@bottle.route('/finish_install')
+@bottle.route('/finish_install', method=['GET','POST'])
 def index():
     """Finish installing!"""
-    if not config.finished:
+    # todo: regex match it instead, make sure prople can't use bad stuff against us?
+    is_local_request = (bottle.request.urlparts[1].lower().startswith('localhost') or
+                        bottle.request.urlparts[1].lower().startswith('127.0.0.1'))
+    if (not config.finished or not users.site_admin_exists) and is_local_request:
         # restrict to 127.0.0.1 / localhost
         for key in ['allow_external_ips']:
             value = bottle.request.forms.get(key)
+            if value == 'TA_True':
+                value = True
             setattr(config, key, value)
         config.save()
+
+        # admin acct
+        if not users.site_admin_exists:
+            username = bottle.request.forms.get('username')
+            password = bottle.request.forms.get('password')
+            users.create_user(username, password, is_site_admin=True)
+
         return env.get_template('install.html').render(content="<h1>Finished installing!</h1>")
+    elif (not config.finished or not users.site_admin_exists):
+        return env.get_template('install.html').render(content="<h1>This can only be done locally, sorry!</h1>")
     else:
         return env.get_template('install.html').render(content="<h1>Already finished installing!</h1>")
 
@@ -65,4 +85,12 @@ def static(filename):
 
 # run the webserver
 if __name__ == '__main__':
-    bottle.run(host='localhost', port=8080, debug=True)
+    try:
+        bottle.run(host='0.0.0.0', port=8080, debug=True)
+    except:
+        traceback.print_exc()
+
+    # shutdown nicely
+    config.save()
+    users.save()
+    users.shutdown()

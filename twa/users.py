@@ -2,6 +2,7 @@
 # TinyApps - User Store
 # written by Daniel Oaks <daniel@danieloaks.net>
 # licensed under the BSD 2-clause license
+import os
 import sqlite3
 import datetime
 import string
@@ -14,6 +15,11 @@ class TinyUsers:
     """Manages users for a TinyApps instance."""
     def __init__(self, path):
         self._path = path
+        # create db folder
+        if os.sep in self._path:
+            folder = self._path.rsplit(os.sep, 1)[0]
+            if not os.path.exists(folder):
+                os.makedirs(folder)
         self._connection = sqlite3.connect(path)
         self._cur = self._connection.cursor()
 
@@ -26,7 +32,7 @@ class TinyUsers:
         """Save DB!"""
         self._connection.commit()
 
-    def close(self):
+    def shutdown(self):
         """Close and shutdown."""
         self.save()
         self._connection.close()
@@ -91,7 +97,19 @@ class TinyUsers:
         return info
 
     # auth
-    def create_user(self, username, password, is_site_admin):
+    @property
+    def site_admin_exists(self):
+        """True if a site admin exists, false otherwise."""
+        # see if user exists
+        self._cur.execute("SELECT name FROM 'users' WHERE is_site_admin = ?", (True,))
+        exists = self._cur.fetchone()
+        if exists:
+            return True
+        else:
+            return False
+
+    # auth
+    def create_user(self, username, password, is_site_admin=False):
         """Create a new user."""
         # see if user exists
         self._cur.execute("SELECT name FROM 'users' WHERE name = ?", (username,))
