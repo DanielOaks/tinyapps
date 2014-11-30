@@ -48,11 +48,18 @@ def index():
         # todo: regex match it instead, make sure prople can't use bad stuff against us?
         is_local_request = (bottle.request.urlparts[1].lower().startswith('localhost') or
                             bottle.request.urlparts[1].lower().startswith('127.0.0.1'))
+        session_id = bottle.request.get_cookie('ta_session')
+        user_info = None
+        if session_id:
+            user_info = ta.users.user_info_from_session(session_id)
+
         if (not ta.config.finished or not ta.users.site_admin_exists) and is_local_request:
             # restrict to 127.0.0.1 / localhost
             page = env.get_template('install.html').render(form=True, config=ta.config, users=ta.users)
         elif not ta.config.finished or not ta.users.site_admin_exists:
             page = env.get_template('install.html').render(content="<h1>Instance must be setup from localhost.</h1>")
+        elif user_info is None:
+            page = env.get_template('login.html').render(form=True)
         else:
             page = 'Login / Overview Pages to go here<br><a href="/example">Example Overview Page</a>'
 
@@ -87,6 +94,33 @@ def index():
             page = env.get_template('install.html').render(content="<h1>This can only be done locally, sorry!</h1>")
         else:
             page = env.get_template('install.html').render(content="<h1>Already finished installing!</h1>")
+
+        return page
+
+
+# login
+@bottle.route('/login', method=['GET','POST'])
+def index():
+    """Accept login details!"""
+    with TaModules() as ta:
+        # todo: regex match it instead, make sure prople can't use bad stuff against us?
+        is_local_request = (bottle.request.urlparts[1].lower().startswith('localhost') or
+                            bottle.request.urlparts[1].lower().startswith('127.0.0.1'))
+        if ta.config.allow_external_ips or is_local_request:
+            # acct login
+            username = bottle.request.forms.get('username')
+            password = bottle.request.forms.get('password')
+            if ta.users.password_matches(username, password):
+                session_id = ta.users.create_session(user_name=username)
+                bottle.response.set_cookie('ta_session', session_id)
+                user_info = ta.users.user_info(user_name=username)
+                page = env.get_template('login.html').render(logged_in=True, user=user_info)
+            else:
+                page = env.get_template('login.html').render(form=True, wrong_password=True, username=username)
+        elif not ta.config.allow_external_ips:
+            page = env.get_template('login.html').render(content="<h1>You can only login locally!</h1>")
+        else:
+            page = env.get_template('login.html').render(content="<h1>Error, try again</h1>")
 
         return page
 

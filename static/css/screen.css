@@ -128,11 +128,11 @@ h3 {
   min-height: 100%;
   font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
 }
-#container.install {
+#container.install, #container.login {
   margin-bottom: 2rem;
   text-align: center;
 }
-#container.install #background {
+#container.install #background, #container.login #background {
   position: fixed;
   top: 0;
   left: 0;
@@ -145,7 +145,7 @@ h3 {
   background: -o-linear-gradient(#28326f, #24488d, #28326f) fixed;
   background: linear-gradient(#28326f, #24488d, #28326f) fixed;
 }
-#container.install .logo {
+#container.install .logo, #container.login .logo {
   display: block;
   width: 30rem;
   max-width: 80%;
@@ -155,7 +155,7 @@ h3 {
   -moz-filter: drop-shadow(0.125rem 0.125rem 0 rgba(0, 0, 0, 0.5));
   filter: drop-shadow(0.125rem 0.125rem 0 rgba(0, 0, 0, 0.5));
 }
-#container.install .form {
+#container.install .form, #container.login .form {
   width: 56rem;
   max-width: 86%;
   margin: 0 auto;
@@ -166,22 +166,29 @@ h3 {
   -moz-filter: drop-shadow(0.125rem 0.125rem 0 rgba(0, 0, 0, 0.5));
   filter: drop-shadow(0.125rem 0.125rem 0 rgba(0, 0, 0, 0.5));
 }
-#container.install .form h1 {
+#container.install .form h1, #container.login .form h1 {
   font-size: 2rem;
 }
-#container.install .form .headerline {
+#container.install .form .headerline, #container.login .form .headerline {
   display: block;
   font-size: 1.1rem;
   margin-top: 0.7rem;
 }
-#container.install .form .ask {
+#container.install .form .ask, #container.login .form .ask {
   display: block;
   font-size: 1.35rem;
   margin-top: 1.6rem;
 }
-#container.install .form .ask:last-child {
+#container.install .form .ask:last-child, #container.login .form .ask:last-child {
   margin-top: 1.5rem;
 }
-#container.install .form .ask input[type=submit] {
+#container.install .form .ask.error, #container.login .form .ask.error {
+  padding: 0.5rem;
+  margin-left: auto;
+  margin-right: auto;
+  border-radius: 1rem;
+  background: #eebbcc;
+}
+#container.install .form .ask input[type=submit], #container.login .form .ask input[type=submit] {
   font-size: 1.6rem;
 }

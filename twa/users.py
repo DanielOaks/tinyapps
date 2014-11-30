@@ -43,18 +43,18 @@ class TinyUsers(VersionedDb):
 
         return session_id
 
-    def user_info_from_session(session_id):
+    def user_info_from_session(self, session_id):
         """Given Session ID, return user info. If expired, delete session."""
         # make sure session exists
-        self._cursor.execute("SELECT (user_id, expiry_ts) FROM 'sessions' WHERE session_id = ?", (session_id,))
-        session = self._cursor.fetchone()
-        if not session:
+        self._cursor.execute("SELECT user_id, expiry_ts FROM 'sessions' WHERE session_id = ?", (session_id,))
+        row = self._cursor.fetchone()
+        if row is None:
             return None
-        user_id, expiry_ts = session[0]
+        user_id, expiry_ts = row
 
         # see if session is expired
         now_ts = datetime.datetime.now(datetime.timezone.utc).timestamp()
-        if expiry_ts > now_ts:
+        if expiry_ts < now_ts:
             return None
 
         return self.user_info(user_id=user_id)
@@ -63,9 +63,9 @@ class TinyUsers(VersionedDb):
         """Return user info from given value."""
         # selection based on given cred
         if user_id is not None:
-            self._cursor.execute("SELECT (id, name, is_site_admin) FROM 'users' WHERE id = ?", (user_id,))
+            self._cursor.execute("SELECT id, name, is_site_admin FROM 'users' WHERE id = ?", (user_id,))
         elif user_name is not None:
-            self._cursor.execute("SELECT (id, name, is_site_admin) FROM 'users' WHERE name = ?", (user_name,))
+            self._cursor.execute("SELECT id, name, is_site_admin FROM 'users' WHERE name = ?", (user_name,))
         else:
             raise AttributeError('You must supply either user_name or user_id to retrieve user info')
 
@@ -75,7 +75,7 @@ class TinyUsers(VersionedDb):
             return None
 
         # return real info dict
-        user_id, name, is_site_admin = info_row[0]
+        user_id, name, is_site_admin = info_row
         info = {
             'id': user_id,
             'name': name,
@@ -117,12 +117,12 @@ class TinyUsers(VersionedDb):
 
     def password_matches(self, username, password):
         """Return whether the given password matches the one in our database."""
-        self._cursor.execute("SELECT hash FROM 'users' WHERE name = ?", (username,))
-        hash = self._cursor.fetchone()
+        self._cursor.execute("SELECT pw_hash, pepper FROM 'users' WHERE name = ?", (username,))
+        row = self._cursor.fetchone()
         # make sure user exists
-        if hash is None:
+        if row is None:
             return False
-        hash = hash[0]
+        check_hash, pepper = row
 
         # compare hashes
         genned_pw = self.__encrypt_password(password, pepper)

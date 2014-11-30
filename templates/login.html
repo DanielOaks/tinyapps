@@ -1,0 +1,34 @@
+{% extends "base.html" %}
+{% block title %}Login{% endblock %}
+{% block class %}login{% endblock %}
+{% block content %}
+    <div id="background"></div>
+    <a href="/"><img class="logo" src="/static/img/logo.svg" alt="Login to TinyApps" title="Login to TinyApps" /></a>
+    <div class="form">
+        {% if form %}
+        <h1>Please login!</h1>
+
+        <span class="headerline">You need to login to TinyApps.</span>
+
+        <form action="login" method="post">
+            {% if wrong_password %}
+                <div class="error ask">
+                    Wrong Username or Password
+                </div>
+            {% endif %}
+            <div class="ask">
+                Login Details:<br>
+                <label>Username: <input type="text" name="username"{% if username %} value="{{ username }}"{% endif %}></label><br>
+                <label>Password: <input type="password" name="password"></label>
+            </div>
+
+            <div class="ask"><input type="submit" value="Install"></div>
+        </form>
+        {% elif logged_in %}
+        <h1>Logged in!</h1>
+        <span class="headerline">You've been logged in, {{ user['name'] }}.</span>
+        {% else %}
+        {{ content }}
+        {% endif %}
+    </div>
+{% endblock %}
