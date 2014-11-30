@@ -2,40 +2,28 @@
 # TinyApps - User Store
 # written by Daniel Oaks <daniel@danieloaks.net>
 # licensed under the BSD 2-clause license
-import os
-import sqlite3
 import datetime
 import string
 
 import passlib.utils
 from passlib.hash import pbkdf2_sha512
 
+from .db import VersionedDb
 
-class TinyUsers:
+
+class TinyUsers(VersionedDb):
     """Manages users for a TinyApps instance."""
+    VERSION = 1
+
     def __init__(self, path):
-        self._path = path
-        # create db folder
-        if os.sep in self._path:
-            folder = self._path.rsplit(os.sep, 1)[0]
-            if not os.path.exists(folder):
-                os.makedirs(folder)
-        self._connection = sqlite3.connect(path)
-        self._cur = self._connection.cursor()
+        super().__init__(path)
 
+    def create_schema(self):
+        super().create_schema()
         # urgh, we have the salt here just to have it all in a single db
-        self._cur.execute("CREATE TABLE IF NOT EXISTS site (salt BLOB)")
-        self._cur.execute("CREATE TABLE IF NOT EXISTS users (id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT, is_site_admin BOOLEAN, pepper BLOB, pw_hash TEXT)")
-        self._cur.execute("CREATE TABLE IF NOT EXISTS sessions (session_id TEXT, user_id INTEGER, expiry_ts INTEGER)")
-
-    def save(self):
-        """Save DB!"""
-        self._connection.commit()
-
-    def shutdown(self):
-        """Close and shutdown."""
-        self.save()
-        self._connection.close()
+        self._cursor.execute("CREATE TABLE IF NOT EXISTS site (salt BLOB)")
+        self._cursor.execute("CREATE TABLE IF NOT EXISTS users (id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT, is_site_admin BOOLEAN, pepper BLOB, pw_hash TEXT)")
+        self._cursor.execute("CREATE TABLE IF NOT EXISTS sessions (session_id TEXT, user_id INTEGER, expiry_ts INTEGER)")
 
     # user stuff
     def create_session(self, user_id=None, user_name=None):
@@ -51,15 +39,15 @@ class TinyUsers:
         expiry_ts = datetime.datetime.now(datetime.timezone.utc).timestamp() + datetime.timedelta(weeks=4).total_seconds()
 
         # put into db
-        self._cur.execute("INSERT INTO 'sessions' (session_id, user_id, expiry_ts) VALUES (?, ?, ?)", (session_id, user_info['id'], expiry_ts))
+        self._cursor.execute("INSERT INTO 'sessions' (session_id, user_id, expiry_ts) VALUES (?, ?, ?)", (session_id, user_info['id'], expiry_ts))
 
         return session_id
 
     def user_info_from_session(session_id):
         """Given Session ID, return user info. If expired, delete session."""
         # make sure session exists
-        self._cur.execute("SELECT (user_id, expiry_ts) FROM 'sessions' WHERE session_id = ?", (session_id,))
-        session = self._cur.fetchone()
+        self._cursor.execute("SELECT (user_id, expiry_ts) FROM 'sessions' WHERE session_id = ?", (session_id,))
+        session = self._cursor.fetchone()
         if not session:
             return None
         user_id, expiry_ts = session[0]
@@ -75,14 +63,14 @@ class TinyUsers:
         """Return user info from given value."""
         # selection based on given cred
         if user_id is not None:
-            self._cur.execute("SELECT (id, name, is_site_admin) FROM 'users' WHERE id = ?", (user_id,))
+            self._cursor.execute("SELECT (id, name, is_site_admin) FROM 'users' WHERE id = ?", (user_id,))
         elif user_name is not None:
-            self._cur.execute("SELECT (id, name, is_site_admin) FROM 'users' WHERE name = ?", (user_name,))
+            self._cursor.execute("SELECT (id, name, is_site_admin) FROM 'users' WHERE name = ?", (user_name,))
         else:
             raise AttributeError('You must supply either user_name or user_id to retrieve user info')
 
         # make sure exists
-        info_row = self._cur.fetchone()
+        info_row = self._cursor.fetchone()
         if not info_row:
             return None
 
@@ -101,8 +89,8 @@ class TinyUsers:
     def site_admin_exists(self):
         """True if a site admin exists, false otherwise."""
         # see if user exists
-        self._cur.execute("SELECT name FROM 'users' WHERE is_site_admin = ?", (True,))
-        exists = self._cur.fetchone()
+        self._cursor.execute("SELECT name FROM 'users' WHERE is_site_admin = ?", (True,))
+        exists = self._cursor.fetchone()
         if exists:
             return True
         else:
@@ -112,8 +100,8 @@ class TinyUsers:
     def create_user(self, username, password, is_site_admin=False):
         """Create a new user."""
         # see if user exists
-        self._cur.execute("SELECT name FROM 'users' WHERE name = ?", (username,))
-        exists = self._cur.fetchone()
+        self._cursor.execute("SELECT name FROM 'users' WHERE name = ?", (username,))
+        exists = self._cursor.fetchone()
         if exists:
             return False
 
@@ -123,14 +111,14 @@ class TinyUsers:
         del password
 
         # insert into database!
-        self._cur.execute("INSERT INTO 'users' (name, is_site_admin, pepper, pw_hash) VALUES (?, ?, ?, ?)", (username, is_site_admin, pepper, hash))
+        self._cursor.execute("INSERT INTO 'users' (name, is_site_admin, pepper, pw_hash) VALUES (?, ?, ?, ?)", (username, is_site_admin, pepper, hash))
 
         return True
 
     def password_matches(self, username, password):
         """Return whether the given password matches the one in our database."""
-        self._cur.execute("SELECT hash FROM 'users' WHERE name = ?", (username,))
-        hash = self._cur.fetchone()
+        self._cursor.execute("SELECT hash FROM 'users' WHERE name = ?", (username,))
+        hash = self._cursor.fetchone()
         # make sure user exists
         if hash is None:
             return False
@@ -148,15 +136,15 @@ class TinyUsers:
     def __salt(self):
         """Return our salt. If salt doesn't exist, create it!"""
         # get salt
-        self._cur.execute("SELECT salt FROM 'site'")
-        salt = self._cur.fetchone()
+        self._cursor.execute("SELECT salt FROM 'site'")
+        salt = self._cursor.fetchone()
         if salt is not None:
             salt = salt[0]
 
         # if salt doesn't exist, create one
         if salt is None:
             salt = passlib.utils.getrandbytes(passlib.utils.rng, 50)
-            self._cur.execute("INSERT INTO 'site' (salt) VALUES (?)", (salt,))
+            self._cursor.execute("INSERT INTO 'site' (salt) VALUES (?)", (salt,))
 
         return salt
 
