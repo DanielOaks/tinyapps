@@ -13,7 +13,7 @@ It starts up a local webserver on port 8080: `http://localhost:8080/ <http://loc
 
 Using HTTPS
 ###########
-You can run a server with HTTPS by generating or putting your keyfile at `/privkey.pem` and your certificate at `/cert.pem`. To automatically generate a certificate and run an SSL server, run the code below::
+You can run a server with HTTPS by generating or putting your keyfile at ``/privkey.pem`` and your certificate at ``/cert.pem``. To automatically generate a certificate and run an SSL server, run the code below::
 
     ./generate_cert
     ./tinyapps
