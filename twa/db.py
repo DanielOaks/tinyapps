@@ -33,6 +33,7 @@ class VersionedDb:
         if db_version is None:
             self.create_schema()
             db_version = self.VERSION
+            self._set_db_version(db_version)
 
         # and upgrade as appropriate
         while db_version < self.VERSION:
