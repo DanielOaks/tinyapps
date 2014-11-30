@@ -11,6 +11,21 @@ Simply cd to the tinyapps directory and run::
 
 It starts up a local webserver on port 8080: `http://localhost:8080/ <http://localhost:8080/>`_
 
+Using HTTPS
+###########
+You can run a server with HTTPS by generating or putting your keyfile at `/privkey.pem` and your certificate at `/cert.pem`. To automatically generate a certificate and run an SSL server, run the code below::
+
+    ./generate_cert
+    ./tinyapps
+
+**Note:** Unfortunately, CherryPy has an error with its SSL backend related to Python3 right now. However, this is fixed in my fork. Until it gets merged upstream, you can install my fork with::
+
+    pip3 install https://github.com/DanielOaks/bottle/archive/cherry-ssl.zip --upgrade
+
+Using PyPy
+##########
+TinyApps also supports running under PyPy (Python3). I'm aiming to keep this the same in the future, since PyPy can introduce very useful performance upgrades.
+
 CSS Styling
 -----------
 We use `Compass <http://compass-style.org/>`_ and SASS to make our CSS handling a whole lot easier.
@@ -19,7 +34,7 @@ Simply `install Compass <http://compass-style.org/install/>`_ from the docs, the
 
     compass watch
 
-Compass will automatically regenerate CSS files as you edit the base SASS files in ``static/sass``
+Compass will automatically regenerate CSS files as you edit the base SASS files in ``static/sass``. Editing the CSS files in ``static/css`` directly is useless, since the changes will be overridden right away.
 
 Mockup
 ------
