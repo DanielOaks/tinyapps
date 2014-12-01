@@ -36,11 +36,15 @@ Simply `install Compass <http://compass-style.org/install/>`_ from the docs, the
 
 Compass will automatically regenerate CSS files as you edit the base SASS files in ``static/sass``. Editing the CSS files in ``static/css`` directly is useless, since the changes will be overridden right away.
 
-Mockup
-------
-As an example, this is an early mockup of the issue tracker.
+Screenshot
+----------
+Here is an early screenshot of the design. Most of this is not actually hooked up on the backend yet, and mostly here for in in-development demonstration!
 
-.. image:: mock.png
+.. image:: docs/dev-screenshot-1.png
+
+And here is a much earlier mockup. It's interesting to see how things change while implementing them.
+
+.. image:: docs/mockup.png
 
 Contact
 -------
