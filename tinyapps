@@ -53,6 +53,7 @@ def index():
         if session_id:
             user_info = ta.users.user_info_from_session(session_id)
 
+        # rendering
         if (not ta.config.finished or not ta.users.site_admin_exists) and is_local_request:
             # restrict to 127.0.0.1 / localhost
             page = env.get_template('install.html').render(form=True, config=ta.config, users=ta.users)
@@ -61,7 +62,17 @@ def index():
         elif user_info is None:
             page = env.get_template('login.html').render(form=True)
         else:
-            page = 'Login / Overview Pages to go here<br><a href="/example">Example Overview Page</a>'
+            # page = 'Login / Overview Pages to go here<br><a href="/example">Example Overview Page</a>'
+            scheme = bottle.request.urlparts[0]
+            server = bottle.request.urlparts[1]
+            base_url = '{}://{}'.format(scheme, server)
+            user_url = '/'.join([base_url, 'user', user_info['name']])
+            user_project_url = '/'.join([base_url, 'me'])
+            project_url = '/'.join([base_url, 'user', user_info['name'], 'example_project'])
+            page = env.get_template('main.html').render(config=ta.config, users=ta.users,
+                                                        user=user_info, user_url=user_url,
+                                                        user_project_url=user_project_url,
+                                                        project_url=project_url)
 
         return page
 
@@ -76,7 +87,7 @@ def index():
                             bottle.request.urlparts[1].lower().startswith('127.0.0.1'))
         if (not ta.config.finished or not ta.users.site_admin_exists) and is_local_request:
             # restrict to 127.0.0.1 / localhost
-            for key in ['allow_external_ips']:
+            for key in ['allow_external_ips', 'allow_registration', 'allow_registration_from_remote']:
                 value = bottle.request.forms.get(key)
                 if value == 'TA_True':
                     value = True

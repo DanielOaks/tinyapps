@@ -8,6 +8,8 @@ import json
 # config
 config_defaults = {
     'allow_external_ips': False,
+    'allow_registration': False,
+    'allow_registration_from_remote': False,
 }
 
 

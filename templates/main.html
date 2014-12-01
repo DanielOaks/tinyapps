@@ -1,0 +1,117 @@
+{% extends "base.html" %}
+{% block title %}{% endblock %}
+{% block class %}main{% endblock %}
+{% block content %}
+    <div id="header">
+        <a class="logo" href="/">
+            <img src="/static/img/logo.svg" alt="TinyApps" title="TinyApps" />
+        </a>
+        <div class="project-bar">
+            Example Project <i class="fa fa-caret-down caret"></i>
+        </div>
+    </div>
+    
+    <div id="content">
+        <div id="list-col">
+            <h1>{{ user['name'] }}</h1>
+            <ul class="module-list">
+                <li><a href="{{ user_project_url }}/flow">Flow</a></li>
+                <li><a href="{{ user_project_url }}/issues">Issues</a></li>
+                <li><a href="{{ user_project_url }}/journal">Journal</a></li>
+                <li><a href="{{ user_project_url }}/paste">Paste</a></li>
+                <li><a href="{{ user_project_url }}/versions">Versions</a></li>
+                <li><a href="{{ user_project_url }}/wiki">Wiki</a></li>
+            </ul>
+
+            <hr>
+
+            <a class="settings" href="/settings">Settings</a>
+
+            <hr>
+            
+            {% if user['is_site_admin'] %}
+            <a class="settings" href="/administration">TinyApps<br />Administration</a>
+            {% endif %}
+        </div>
+        <div class="content-col issues"><div class="flexy">
+            <div class="col stretch block">
+                <h1>Issue List</h1>
+                <hr>
+                The other one lol.<br><br><br><br><br><br><br><br>
+                The other one lol.<br><br><br><br><br><br><br><br>
+                The other one lol.<br><br><br><br><br><br><br><br>
+                The other one lol.<br><br><br><br><br><br><br><br>
+                The other one lol.<br><br><br><br><br><br><br><br>
+                The other one lol.<br><br><br><br><br><br><br><br>
+                The other one lol.<br><br><br><br><br><br><br><br>
+                Stuff.
+            </div>
+            <div class="col vertical-flex">
+                <div class="submitbutton">
+                    New Issue
+                </div>
+                <div class="block smalltext">
+                    <h1>Labels</h1>
+                    <hr>
+                    <ul>
+                        <li class="horizontal-flex vertical-center">
+                            <div class="issue-colour" style="background: #48f"></div>
+                            <span>bug</span>
+                            <span class="count">2</span>
+                        </li>
+                        <li class="horizontal-flex vertical-center">
+                            <div class="issue-colour" style="background: #84f"></div>
+                            <span>enhancement</span>
+                            <span class="count">4</span>
+                        </li>
+                        <li class="horizontal-flex vertical-center">
+                            <div class="issue-colour" style="background: #f84"></div>
+                            <span>more info required</span>
+                            <span class="count">1</span>
+                        </li>
+                    </ul>
+                    <hr>
+                    <div class="horizontal-flex">
+                        <input placeholder="new label">
+                        <div class="add-button">+</div>
+                    </div>
+                </div>
+
+                <div class="block smalltext">
+                    <h1>Milestones</h1>
+                    <hr>
+                    <ul class="milestones">
+                        <li>
+                            <h2>Character Sheets</h2>
+                            <tagline>Due in one week</tagline>
+                            <div class="percent"><div class="complete" style="width: 34%;">&nbsp;34%</div></div>
+                        </li>
+                        <hr>
+                        <li>
+                            <h2>Writing Due</h2>
+                            <tagline>Due in two weeks</tagline>
+                            <div class="percent"><div class="complete" style="width: 12%;">&nbsp;12%</div></div>
+                        </li>
+                        <hr>
+                        <li>
+                            <h2>Assets Finished</h2>
+                            <tagline>Due in six weeks</tagline>
+                            <div class="percent"><div class="complete" style="width: 88%;">&nbsp;88%</div></div>
+                        </li>
+                    </ul>
+                    <hr>
+                    <div class="horizontal-flex">
+                        <input placeholder="milestone name">
+                        <div class="add-button">+</div>
+                    </div>
+                </div>
+            </div>
+        </div></div>
+    </div>
+
+    <div id="footer">
+        <!-- &ndash; -->
+        Developed by <a href="mailto:daniel@danieloaks.net">Daniel Oaks</a>.
+        Contribute on <a href="https://github.com/DanielOaks/tinyapps">Github</a>
+    </div>
+{% endblock %}

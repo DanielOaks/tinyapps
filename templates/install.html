@@ -13,6 +13,10 @@
         <form action="finish_install" method="post">
             <div class="ask"><label><input type="checkbox" name="allow_external_ips" value="TA_True"> Let other computers access my TinyApps.</label></div>
 
+            <div class="ask"><label><input type="checkbox" name="allow_registration" value="TA_True"> Let other people register for my TinyApps.</label></div>
+
+            <div class="ask"><label><input type="checkbox" name="allow_registration_from_remote" value="TA_True"> Let people register from remote computers.</label></div>
+
             {% if not users.site_admin_exists %}
                 <div class="ask">
                     Admin Account:<br>
