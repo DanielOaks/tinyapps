@@ -278,13 +278,19 @@ html, body
                             font-size: 0.8rem
                     .add-button
                         display: block
-                        padding: 0.2rem 0.5rem 0.3rem 0.4rem
+                        padding: 0 0.35rem 0.2rem 0.35rem
                         border-radius: 0.2rem
                         margin-left: 0.2rem
-                        background: #6edb76
                         border: 1px solid #6eaf76
                         box-sizing: border-box
                         cursor: pointer
+                        font-weight: bold
+                        font-size: 1.2rem
+                        color: #fff
+                        @include single-transition(background-color, 0.2s)
+                        background-color: #6edb76
+                        &:hover
+                            background-color: #6ee476
 
                     .milestones
                         h2
