@@ -306,7 +306,7 @@ html, body {
   border-right: none;
 }
 #container.main #content #list-col hr {
-  margin: 1rem -1.25rem;
+  margin: 0.8rem -1.25rem;
   height: 2px;
   width: calc(100% + 3rem);
   border: 0;
@@ -334,7 +334,6 @@ html, body {
   text-align: center;
   display: block;
   font-size: 0.8rem;
-  line-height: 1.2;
   font-style: italic;
 }
 #container.main #content .content-col {
