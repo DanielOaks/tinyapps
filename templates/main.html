@@ -3,11 +3,14 @@
 {% block class %}main{% endblock %}
 {% block content %}
     <div id="header">
-        <a class="logo" href="/">
+        <!-- <a class="logo" href="/">
             <img src="/static/img/logo.svg" alt="TinyApps" title="TinyApps" />
-        </a>
+        </a> -->
         <div class="project-bar">
-            Example Project <i class="fa fa-caret-down caret"></i>
+            <span>Example Project <i class="fa fa-caret-down caret"></i></span>
+            <a class="mod" href="{{ project_url }}/flow">Flow</a>
+            <a class="mod selected" href="{{ project_url }}/issues">Issues</a>
+            <a class="mod" href="{{ project_url }}/journal">Journal</a>
         </div>
     </div>
     

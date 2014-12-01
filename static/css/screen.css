@@ -214,6 +214,8 @@ html, body {
 #container.main #header {
   width: 100%;
   padding: 0.5rem 1rem;
+  display: flex;
+  border-bottom: 0.1rem solid rgba(7, 15, 36, 0.9);
 }
 #container.main #header .logo {
   display: inline-block;
@@ -226,25 +228,50 @@ html, body {
   max-height: 3rem;
 }
 #container.main #header .project-bar {
+  flex-grow: 1;
   -webkit-filter: drop-shadow(0.125rem 0.125rem 0 rgba(0, 0, 0, 0.5));
   -moz-filter: drop-shadow(0.125rem 0.125rem 0 rgba(0, 0, 0, 0.5));
   filter: drop-shadow(0.125rem 0.125rem 0 rgba(0, 0, 0, 0.5));
-  display: inline-block;
-  color: #f8f8f8;
-  font-size: 2.5rem;
+  text-align: center;
   padding-left: 1rem;
   padding-right: 0.5rem;
   padding-top: 0.2rem;
   vertical-align: top;
+  padding-bottom: 0.3rem;
   font-style: italic;
   font-weight: 300;
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-font-smoothing: antialiased;
 }
-#container.main #header .project-bar .caret {
+#container.main #header .project-bar span {
+  display: inline-block;
+  color: #f8f8f8;
+  font-size: 2.5rem;
+  margin-right: 1rem;
+}
+#container.main #header .project-bar span .caret {
   padding-left: 0.3rem;
   font-size: 1.75rem;
 }
+#container.main #header .project-bar a.mod {
+  text-decoration: none;
+  font-size: 1.7rem;
+  display: inline-block;
+  margin-left: 0.75rem;
+  position: relative;
+  top: -0.15rem;
+  -webkit-transition: color 0.2s;
+  -moz-transition: color 0.2s;
+  -o-transition: color 0.2s;
+  transition: color 0.2s;
+  color: #f4f4ff;
+}
+#container.main #header .project-bar a.mod:hover, #container.main #header .project-bar a.mod.selected {
+  color: #bbccff;
+}
 #container.main #footer {
-  padding: 0.5rem 1rem;
+  padding: 0.3rem 1rem 0.5rem;
+  border-top: 0.1rem solid rgba(7, 15, 36, 0.2);
   font-size: 0.75rem;
   text-align: center;
   font-style: italic;
@@ -445,8 +472,13 @@ html, body {
   padding: 0.1rem 0;
 }
 #container.main #footer {
+  font-weight: 600;
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-font-smoothing: antialiased;
   color: #fcfeff;
 }
 #container.main #footer a {
   color: #dcdeff;
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-font-smoothing: antialiased;
 }

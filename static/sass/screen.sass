@@ -87,6 +87,8 @@ html, body
     #header
         width: 100%
         padding: 0.5rem 1rem
+        display: flex
+        border-bottom: 0.1rem solid rgba(7, 15, 36, 0.9)
         .logo
             display: inline-block
             padding-right: 0.5rem
@@ -94,22 +96,40 @@ html, body
             img
                 max-height: 3rem
         .project-bar
+            flex-grow: 1
             @include filter($sharp-drop-shadow)
-            display: inline-block
-            color: #f8f8f8
-            font-size: 2.5rem
+            text-align: center
             padding-left: 1rem
             padding-right: 0.5rem  // otherwise italic fonts get cut off in Chrome
             padding-top: 0.2rem  // what an
             vertical-align: top  // ugly hack
+            padding-bottom: 0.3rem
             font-style: italic
             font-weight: 300  // light
-            .caret
-                padding-left: 0.3rem
-                font-size: 1.75rem
+            @include font-smoothing()
+            span
+                display: inline-block
+                color: #f8f8f8
+                font-size: 2.5rem
+                margin-right: 1rem
+                .caret
+                    padding-left: 0.3rem
+                    font-size: 1.75rem
+            a.mod
+                text-decoration: none
+                font-size: 1.7rem
+                display: inline-block
+                margin-left: 0.75rem
+                position: relative
+                top: -0.15rem
+                @include single-transition(color, 0.2s)
+                color: #f4f4ff
+                &:hover, &.selected
+                    color: #bcf
 
     #footer
-        padding: 0.5rem 1rem
+        padding: 0.3rem 1rem 0.5rem
+        border-top: 0.1rem solid rgba(7, 15, 36, 0.2)
         font-size: 0.75rem
         text-align: center
         font-style: italic
@@ -285,6 +305,9 @@ html, body
                             padding: 0.1rem 0
 
     #footer
+        font-weight: 600
+        @include font-smoothing()
         color: #fcfeff
         a
             color: #dcdeff
+            @include font-smoothing()

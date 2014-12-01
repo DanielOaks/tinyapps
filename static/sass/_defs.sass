@@ -21,3 +21,8 @@ $mobile-width: 40rem
     @else if $media == desktop
         @media only screen and (min-width: $mobile-width)
             @content
+
+// fonts
+@mixin font-smoothing()
+    -moz-osx-font-smoothing: grayscale  // awesome firefox is awesome apparently
+    -webkit-font-smoothing: antialiased  // and so is chrome! awesome all-round, guys!
