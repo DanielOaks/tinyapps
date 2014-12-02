@@ -243,15 +243,57 @@ html, body {
   -moz-osx-font-smoothing: grayscale;
   -webkit-font-smoothing: antialiased;
 }
-#container.main #header .project-bar span {
+#container.main #header .project-bar .proj {
+  cursor: pointer;
   display: inline-block;
   color: #f8f8f8;
   font-size: 2.5rem;
   margin-right: 1rem;
 }
-#container.main #header .project-bar span .caret {
+#container.main #header .project-bar .proj .caret {
   padding-left: 0.3rem;
   font-size: 1.75rem;
+}
+#container.main #header .project-bar .proj-select {
+  display: inline-block;
+  position: relative;
+  display: none;
+}
+#container.main #header .project-bar .proj-select.shown {
+  display: inline-block;
+}
+#container.main #header .project-bar .proj-select > div {
+  position: absolute;
+  top: 1rem;
+  left: calc(-10rem - 1.71rem);
+  width: 20rem;
+  min-height: 2rem;
+  -webkit-transition: background-color 0.2s;
+  -moz-transition: background-color 0.2s;
+  -o-transition: background-color 0.2s;
+  transition: background-color 0.2s;
+  background-color: #fdfdfd;
+  border-radius: 0.35rem;
+  border: rgba(10, 10, 20, 0.4) 0.1rem solid;
+}
+#container.main #header .project-bar .proj-select > div:hover {
+  background-color: #f7f7f7;
+}
+#container.main #header .project-bar .proj-select > div .button {
+  padding: 0.3rem 0.3rem;
+  text-align: center;
+  cursor: pointer;
+}
+#container.main #header .project-bar .proj-select > div .newproj {
+  color: #3b3b3b;
+}
+#container.main #header .project-bar .proj-select > div .newproj .plus {
+  display: block;
+  margin: 0 auto 0.2rem;
+}
+#container.main #header .project-bar .proj-select > div .newproj .plus .fa-plus-circle {
+  font-size: 3rem;
+  color: rgba(10, 10, 20, 0.7);
 }
 #container.main #header .project-bar a.mod {
   text-decoration: none;

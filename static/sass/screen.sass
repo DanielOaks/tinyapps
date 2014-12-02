@@ -107,7 +107,8 @@ html, body
             font-style: italic
             font-weight: 300  // light
             @include font-smoothing()
-            span
+            .proj
+                cursor: pointer
                 display: inline-block
                 color: #f8f8f8
                 font-size: 2.5rem
@@ -115,6 +116,37 @@ html, body
                 .caret
                     padding-left: 0.3rem
                     font-size: 1.75rem
+            .proj-select
+                display: inline-block
+                position: relative
+                display: none  // hidden until click
+                &.shown
+                    display: inline-block
+                > div
+                    position: absolute
+                    top: 1rem
+                    $proj-select-width: 20rem
+                    left: calc(#{-$proj-select-width / 2} - 1.71rem)
+                    width: $proj-select-width
+                    min-height: 2rem
+                    @include single-transition(background-color, 0.2s)
+                    background-color: #fdfdfd
+                    &:hover
+                        background-color: #f7f7f7
+                    border-radius: 0.35rem
+                    border: rgba(10,10,20,0.4) 0.1rem solid
+                    .button
+                        padding: 0.3rem 0.3rem
+                        text-align: center
+                        cursor: pointer
+                    .newproj
+                        .plus
+                            display: block
+                            margin: 0 auto 0.2rem
+                            .fa-plus-circle
+                                font-size: 3rem
+                                color: rgba(10,10,20,0.7)
+                        color: #3b3b3b
             a.mod
                 text-decoration: none
                 font-size: 1.7rem
