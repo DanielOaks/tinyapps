@@ -26,6 +26,8 @@ Using PyPy
 ##########
 TinyApps also supports running under PyPy (Python3). I'm aiming to keep this the same in the future, since PyPy can introduce very useful performance upgrades.
 
+**Note:** PyPy support is currently also broken! This is because it doesn't have the ``datetime.datetime.timestamp()`` function that's introduced in Python3.3, so hopefully that'll get fixed soon. That said, I find it decently speedy right now anyway.
+
 CSS Styling
 -----------
 We use `Compass <http://compass-style.org/>`_ and SASS to make our CSS handling a whole lot easier.
@@ -38,13 +40,9 @@ Compass will automatically regenerate CSS files as you edit the base SASS files 
 
 Screenshot
 ----------
-Here is an early screenshot of the design. Most of this is not actually hooked up on the backend yet, and mostly here for in in-development demonstration!
+Here is a screenshot of the current (early) design. Most of this is not actually hooked up on the backend yet, and mostly here as a little demonstration!
 
-.. image:: docs/dev-screenshot-1.png
-
-And here is a much earlier mockup. It's interesting to see how things change while implementing them.
-
-.. image:: docs/mockup.png
+.. image:: docs/dev-screenshot-2.png
 
 Contact
 -------

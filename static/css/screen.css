@@ -266,33 +266,54 @@ html, body {
 #container.main #header .project-bar .proj-select > div {
   position: absolute;
   top: 1rem;
-  left: calc(-10rem - 1.71rem);
-  width: 20rem;
+  left: calc(-7rem - 1.71rem);
+  width: 14rem;
   min-height: 2rem;
+  border-radius: 0.35rem;
+  border: rgba(10, 10, 20, 0.4) 0.1rem solid;
+}
+#container.main #header .project-bar .proj-select > div .button {
+  padding: 0.5rem 0.3rem;
+  text-align: center;
+  cursor: pointer;
   -webkit-transition: background-color 0.2s;
   -moz-transition: background-color 0.2s;
   -o-transition: background-color 0.2s;
   transition: background-color 0.2s;
   background-color: #fdfdfd;
-  border-radius: 0.35rem;
-  border: rgba(10, 10, 20, 0.4) 0.1rem solid;
 }
-#container.main #header .project-bar .proj-select > div:hover {
-  background-color: #f7f7f7;
+#container.main #header .project-bar .proj-select > div .button + .button {
+  border-top: 0.1rem rgba(10, 10, 20, 0.15) solid;
 }
-#container.main #header .project-bar .proj-select > div .button {
-  padding: 0.3rem 0.3rem;
-  text-align: center;
-  cursor: pointer;
+#container.main #header .project-bar .proj-select > div .button:hover {
+  background-color: whitesmoke;
 }
-#container.main #header .project-bar .proj-select > div .newproj {
+#container.main #header .project-bar .proj-select > div .button:first-child {
+  border-top-left-radius: 0.35rem;
+  border-top-right-radius: 0.35rem;
+}
+#container.main #header .project-bar .proj-select > div .button:last-child {
+  border-bottom-left-radius: 0.35rem;
+  border-bottom-right-radius: 0.35rem;
+}
+#container.main #header .project-bar .proj-select > div .existing-proj {
+  padding-bottom: 0.7rem;
   color: #3b3b3b;
+  font-weight: 500;
+  font-size: 1.4rem;
+  font-style: normal;
 }
-#container.main #header .project-bar .proj-select > div .newproj .plus {
+#container.main #header .project-bar .proj-select > div .new-proj {
+  color: #3b3b3b;
+  font-weight: 500;
+  font-size: 0.85rem;
+  font-style: normal;
+}
+#container.main #header .project-bar .proj-select > div .new-proj .plus {
   display: block;
-  margin: 0 auto 0.2rem;
+  margin: 0 auto 0.15rem;
 }
-#container.main #header .project-bar .proj-select > div .newproj .plus .fa-plus-circle {
+#container.main #header .project-bar .proj-select > div .new-proj .plus .fa-plus-circle {
   font-size: 3rem;
   color: rgba(10, 10, 20, 0.7);
 }
